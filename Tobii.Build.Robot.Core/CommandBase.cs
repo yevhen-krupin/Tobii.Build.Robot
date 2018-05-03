@@ -1,20 +1,18 @@
 ﻿using System.Threading;
 
-namespace Tobii.Build.Robot
+namespace Tobii.Build.Robot.Core
 {
     public abstract class CommandBase
     {
         public CancellationTokenSource CancellationTokenSource { get; }
-        public Output Output { get; }
 
-        protected CommandBase(CancellationTokenSource cancellationTokenSource, Output output)
+        protected CommandBase(CancellationTokenSource cancellationTokenSource)
         {
             CancellationTokenSource = cancellationTokenSource;
-            Output = output;
         }
 
         public abstract string Name { get; }
 
-        public abstract void Do();
+        public abstract void Do(Output output, string[] parameters);
     }
 }

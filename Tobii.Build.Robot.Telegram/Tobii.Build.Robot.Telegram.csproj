@@ -1,19 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Configuration" Version="0.1.3" />
     <PackageReference Include="Telegram.Bot" Version="13.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="bot.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Tobii.Build.Robot.Config\Tobii.Build.Robot.Config.csproj" />
+    <ProjectReference Include="..\Tobii.Build.Robot.Core\Tobii.Build.Robot.Core.csproj" />
   </ItemGroup>
 
 </Project>

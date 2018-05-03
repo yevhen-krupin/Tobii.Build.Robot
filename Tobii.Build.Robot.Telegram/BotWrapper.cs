@@ -1,22 +1,24 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
+using Tobii.Build.Robot.Core;
 
-namespace Tobii.Build.Robot
+namespace Tobii.Build.Robot.Telegram
 {
-    public class BotWrapper : IDisposable
+    public class BotWrapper : IBotWrapper
     {
         private readonly TelegramBotClient _client;
         private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CommandsExecutor _commandsExecutor;
         private readonly Output _output;
 
-        public BotWrapper(TelegramBotClient client, CancellationTokenSource cancellationTokenSource, Output output)
+        public BotWrapper(TelegramBotClient client, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
         {
             _client = client;
             _cancellationTokenSource = cancellationTokenSource;
+            _commandsExecutor = commandsExecutor;
             _output = output;
         }
         
@@ -32,7 +34,8 @@ namespace Tobii.Build.Robot
         private void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
         {
             _output.Write(messageEventArgs.Message.Chat.FirstName + " said: " + messageEventArgs.Message.Text);
-            _client.SendTextMessageAsync(messageEventArgs.Message.Chat.Id, "Hello " + messageEventArgs.Message.Chat.FirstName);
+            var output = new Output(new IOutputStream [] { _output, new BotCallbackOutputStream(_client, messageEventArgs.Message)});
+            _commandsExecutor.Execute(messageEventArgs.Message.Text, output);
         }
 
         public void Dispose()
