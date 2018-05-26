@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Rest", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Telegram", "Tobii.Build.Robot.Telegram\Tobii.Build.Robot.Telegram.csproj", "{74006898-333B-4E88-9AEB-971D25CD78EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii.Build.Robot.Config", "Tobii.Build.Robot.Config\Tobii.Build.Robot.Config.csproj", "{1FCA4E0F-7AA6-489C-8CBA-38C818FFFF6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Config", "Tobii.Build.Robot.Config\Tobii.Build.Robot.Config.csproj", "{1FCA4E0F-7AA6-489C-8CBA-38C818FFFF6B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Rest.Core", "Tobii.Build.Robot.Rest.Core\Tobii.Build.Robot.Rest.Core.csproj", "{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii.Build.Robot.Rest.Command", "..\Tobii.Build.Robot.Rest.Command\Tobii.Build.Robot.Rest.Command.csproj", "{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{1FCA4E0F-7AA6-489C-8CBA-38C818FFFF6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FCA4E0F-7AA6-489C-8CBA-38C818FFFF6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FCA4E0F-7AA6-489C-8CBA-38C818FFFF6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

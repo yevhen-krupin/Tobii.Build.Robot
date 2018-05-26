@@ -3,10 +3,14 @@ using System.Xml.Serialization;
 
 namespace Tobii.Build.Robot.Model
 {
-    public class Projects
+    public class Projects : RestBase
     {
-        public int count { get; set; }
-        public string href { get; set; }
-        public List<Project> project { get; set; }
+        public int Count { get; set; }
+        public List<Project> Project { get; set; }
+    }
+
+    public class RestBase
+    {
+        public string Href { get; set; }
     }
 }

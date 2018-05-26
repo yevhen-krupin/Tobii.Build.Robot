@@ -13,10 +13,13 @@ namespace Tobii.Build.Robot.Rest
         private const string RootProject = "_Root";
         private ITeamCityRest _api;
 
-        public TeamCity(string path, string userName, string password)
+        public string BaseUrl { get; }
+
+        public TeamCity(string url, string userName, string password)
         {
+            BaseUrl = url;
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
-            _api = RestClient.For<ITeamCityRest>(path);
+            _api = RestClient.For<ITeamCityRest>(BaseUrl);
             _api.Authorization = new AuthenticationHeaderValue("Basic", credentials);
         }
 
@@ -32,9 +35,19 @@ namespace Tobii.Build.Robot.Rest
             return branches;
         }
 
-        public Task<Builds> GetBuildsWithStatusesAsync(string projectId)
+        public Task<Model.Build> GetBuildFullInfo([Path] string buildId)
         {
-            return _api.GetBuildsWithStatusesAsync(projectId);
+            return _api.GetBuild(buildId);
+        }
+
+        public Task<BuildTypes> GetBuildTypes([Path] string projectId)
+        {
+            return _api.GetBuildTypes(projectId);
+        }
+
+        public Task<Builds> GetBuilds([Path] string projectId)
+        {
+            return _api.GetBuilds(projectId);
         }
     }
 }

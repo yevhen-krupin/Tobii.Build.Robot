@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tobii.Build.Robot.Core
 {
@@ -13,6 +15,6 @@ namespace Tobii.Build.Robot.Core
 
         public abstract string Name { get; }
 
-        public abstract void Do(Output output, string[] parameters);
+        public abstract Task Do(Output output, string[] parameters);
     }
 }

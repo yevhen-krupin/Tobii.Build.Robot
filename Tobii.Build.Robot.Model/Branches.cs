@@ -1,10 +1,11 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Tobii.Build.Robot.Model
 {
-    public class Branches
+    public class Branches : RestBase
     {
-        public Branch Branch { get; set; }
+        public List<Branch> branch { get; set; }
         public string Count { get; set; }
     }
 }

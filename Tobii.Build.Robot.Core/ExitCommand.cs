@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tobii.Build.Robot.Core
 {
@@ -13,7 +14,7 @@ namespace Tobii.Build.Robot.Core
             get => "exit";
         }
 
-        public override void Do(Output output, string[] parameters)
+        public override async Task Do(Output output, string[] parameters)
         {
             output.Write("Closing...");
             CancellationTokenSource.Cancel();

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Tobii.Build.Robot.Config\Tobii.Build.Robot.Config.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Core\Tobii.Build.Robot.Core.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Model\Tobii.Build.Robot.Model.csproj" />
+    <ProjectReference Include="..\Tobii.Build.Robot.Rest.Core\Tobii.Build.Robot.Rest.Core.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Rest\Tobii.Build.Robot.Rest.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Telegram\Tobii.Build.Robot.Telegram.csproj" />
   </ItemGroup>

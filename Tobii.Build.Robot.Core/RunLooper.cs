@@ -18,22 +18,30 @@ namespace Tobii.Build.Robot.Core
             _cancellationTokenSource = cancellationTokenSource;
         }
 
-        public void Run()
+        public async void Run()
         {
-            try
+            while (true)
             {
-                while (true)
+                try
                 {
                     var message = _inputStream.GetMessage();
-                    _context.Execute(message, _output);
+                    await _context.Execute(message, _output);
                     _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                _output.Write("ill be back baby");
-            }
+                catch (OperationCanceledException)
+                {
+                    _output.Write("ill be back baby");
+                    return;
+                }
+                catch (ArgumentException)
+                {
+                    _output.Write("command received unexpected arguments count");
+                }
+                catch(Exception ex)
+                {
+                    _output.Write("error: " + ex.Message);                    
+                }
+            }                    
         }
     }
 }

@@ -12,13 +12,19 @@ namespace Tobii.Build.Robot.Rest
         [Header("Authorization")]
         AuthenticationHeaderValue Authorization { get; set; }
 
-        [Get("/httpAuth/app/rest/projects")]
+        [Get(RestConstants.GetProjectsPath)]
         Task<Projects> GetProjectsAsync();
 
-        [Get("/httpAuth/app/rest/projects/{projectId}/branches")]
+        [Get(RestConstants.GetBranchesPath)]
         Task<Branches> GetBranchesAsync([Path]string projectId);
+        
+        [Get(RestConstants.GetBuildTypesPath)]
+        Task<BuildTypes> GetBuildTypes([Path]string projectId);
 
-        [Get("/httpAuth/app/rest/buildTypes?locator=affectedProject:(id:{projectId})&fields=buildType(id,name,project,builds($locator(running:false,canceled:false,count:1),build(number,status,statusText)))")]
-        Task<Builds> GetBuildsWithStatusesAsync([Path]string projectId);
+        [Get(RestConstants.GetBuildsPath)]
+        Task<Builds> GetBuilds([Path]string projectId);
+
+        [Get(RestConstants.GetBuildPath)]
+        Task<Model.Build> GetBuild([Path]string buildId);
     }
 }

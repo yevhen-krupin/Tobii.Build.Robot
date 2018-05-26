@@ -2,8 +2,8 @@
 
 namespace Tobii.Build.Robot.Model
 {
-    public class Builds
+    public class Builds : RestBase
     {
-        public Build Build { get; set; }
+        public Build[] Build { get; set; }
     }
 }

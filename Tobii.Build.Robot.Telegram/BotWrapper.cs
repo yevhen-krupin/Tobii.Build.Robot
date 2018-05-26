@@ -34,8 +34,10 @@ namespace Tobii.Build.Robot.Telegram
         private void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
         {
             _output.Write(messageEventArgs.Message.Chat.FirstName + " said: " + messageEventArgs.Message.Text);
-            var output = new Output(new IOutputStream [] { _output, new BotCallbackOutputStream(_client, messageEventArgs.Message)});
-            _commandsExecutor.Execute(messageEventArgs.Message.Text, output);
+            var wrappedOutput = new Output(new IOutputStream[] {
+                _output,
+                new BotCallbackOutputStream(_client, messageEventArgs.Message)});
+            _commandsExecutor.Execute(messageEventArgs.Message.Text, wrappedOutput);
         }
 
         public void Dispose()
