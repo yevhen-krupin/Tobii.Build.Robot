@@ -3,6 +3,7 @@ using System.Threading;
 using Telegram.Bot;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Rest;
+using Tobii.Build.Robot.Rest.Command;
 using Tobii.Build.Robot.Rest.Core;
 using Tobii.Build.Robot.Telegram;
 using ConfigurationProvider = Tobii.Build.Robot.Telegram.ConfigurationProvider;
