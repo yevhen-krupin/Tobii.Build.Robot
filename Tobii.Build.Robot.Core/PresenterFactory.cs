@@ -6,5 +6,10 @@
         {
             return TextView.FromMessage(message);
         }
+
+        public IOutputView Options(string title, Clickable[] options)
+        {
+            return OptionsView.FromOptions(title, options);
+        }
     }
 }

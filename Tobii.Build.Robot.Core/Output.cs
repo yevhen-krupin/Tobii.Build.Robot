@@ -20,6 +20,11 @@ namespace Tobii.Build.Robot.Core
             Show(PresenterFactory.Text(text));
         }
 
+        public void Ask(string title, Clickable[] options)
+        {
+            Show(PresenterFactory.Options(title, options));
+        }
+
         public void Show(IOutputView outputView)
         {
             foreach (var outputStream in _streams)

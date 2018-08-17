@@ -44,8 +44,9 @@ namespace Tobii.Build.Robot
                 new TeamcityGetBuildTypesCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildCommand(gateway.For<ITeamCity>(), cancellationSource)
             });
-            var runLooper = new RunLooper(new InputStream(), commandsExecutor, output, cancellationSource);
-            using (var botWrapper = new BotWrapper(client, presenterFactory, cancellationSource, commandsExecutor, output))
+            var inputStream = new InputStream();
+            var runLooper = new RunLooper(inputStream, commandsExecutor, output, cancellationSource);
+            using (var botWrapper = new BotWrapper(client, inputStream, presenterFactory, cancellationSource, commandsExecutor, output))
             {
                 botWrapper.Start();
                 runLooper.Run();

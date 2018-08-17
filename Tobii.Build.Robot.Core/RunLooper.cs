@@ -24,12 +24,15 @@ namespace Tobii.Build.Robot.Core
             {
                 try
                 {
-                    var message = _inputStream.GetMessage();
-                    _context.Execute(message, _output)
-                        .ConfigureAwait(false)
-                        .GetAwaiter()
-                        .GetResult();
-                    _cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    if(_inputStream.TryGetMessage(out Message message))
+                    {
+                        _context.Execute(message.Content, message.CustomizedOutput ?? _output)
+                           .ConfigureAwait(false)
+                           .GetAwaiter()
+                           .GetResult();
+                        _cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                        Thread.Sleep(50);
+                    }
                 }
                 catch (OperationCanceledException)
                 {

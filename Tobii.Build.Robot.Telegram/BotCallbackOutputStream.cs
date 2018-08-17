@@ -1,5 +1,8 @@
-﻿using Telegram.Bot;
+﻿using System.Linq;
+using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.InlineKeyboardButtons;
+using Telegram.Bot.Types.ReplyMarkups;
 using Tobii.Build.Robot.Core;
 
 namespace Tobii.Build.Robot.Telegram
@@ -30,9 +33,14 @@ namespace Tobii.Build.Robot.Telegram
             _client.SendTextMessageAsync(chatId, message);
         }
 
-        public void ShowOptions(string title, Clickable[] button)
+        public async void ShowOptions(string title, Clickable[] options)
         {
-            throw new System.NotImplementedException();
+            var buttons = options
+                .Select(x => new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(x.Name, x.To) } )
+                .ToArray();
+            var rkm = new InlineKeyboardMarkup();
+            rkm.InlineKeyboard = buttons;
+            await _client.SendTextMessageAsync(chatId, title, replyMarkup: rkm);
         }
     }
 }
