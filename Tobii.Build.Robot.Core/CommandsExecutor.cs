@@ -17,7 +17,7 @@ namespace Tobii.Build.Robot.Core
         public async Task Execute(string message, Output output)
         {
             var splitted = message.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var command = Enumerable.SingleOrDefault(_commands, x => x.Name == splitted.First());
+            var command = Enumerable.SingleOrDefault(_commands, x => x.Name.Equals(splitted.First(), StringComparison.OrdinalIgnoreCase));
             if (command != null)
             {
                 var parameters = splitted.Skip(1).ToArray();

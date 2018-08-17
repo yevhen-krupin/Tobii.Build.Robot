@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Tobii.Build.Robot.Core
 {
@@ -9,18 +7,24 @@ namespace Tobii.Build.Robot.Core
     {
         private readonly IList<IOutputStream> _streams;
 
-        public Output(IEnumerable<IOutputStream> streams)
+        public IPresenterFactory PresenterFactory { get; }
+
+        public Output(IPresenterFactory presenterFactory, IEnumerable<IOutputStream> streams)
         {
             _streams = streams.ToList();
+            PresenterFactory = presenterFactory;
         }
 
-        public void Write(string message)
+        public void Write(string text)
         {
-            var sb = new StringBuilder("[").Append(DateTime.Now.ToString("G")).Append("] ").Append(message);
-            message = sb.ToString();
+            Show(PresenterFactory.Text(text));
+        }
+
+        public void Show(IOutputView outputView)
+        {
             foreach (var outputStream in _streams)
             {
-                outputStream.Write(message);
+                outputStream.Show(outputView);
             }
         }
     }

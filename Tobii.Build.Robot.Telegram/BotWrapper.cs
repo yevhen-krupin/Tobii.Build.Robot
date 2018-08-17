@@ -10,13 +10,15 @@ namespace Tobii.Build.Robot.Telegram
     public class BotWrapper : IBotWrapper
     {
         private readonly TelegramBotClient _client;
+        private readonly IPresenterFactory presenterFactory;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CommandsExecutor _commandsExecutor;
         private readonly Output _output;
 
-        public BotWrapper(TelegramBotClient client, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
+        public BotWrapper(TelegramBotClient client, IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
         {
             _client = client;
+            this.presenterFactory = presenterFactory;
             _cancellationTokenSource = cancellationTokenSource;
             _commandsExecutor = commandsExecutor;
             _output = output;
@@ -31,13 +33,17 @@ namespace Tobii.Build.Robot.Telegram
             });
         }
 
-        private void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
+        private async void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
         {
-            _output.Write(messageEventArgs.Message.Chat.FirstName + " said: " + messageEventArgs.Message.Text);
-            var wrappedOutput = new Output(new IOutputStream[] {
-                _output,
-                new BotCallbackOutputStream(_client, messageEventArgs.Message)});
-            _commandsExecutor.Execute(messageEventArgs.Message.Text, wrappedOutput);
+            // todo: looks like here we should decide about when to create wrapped output and when cache chat id.
+            _output.Show(
+                presenterFactory.Text(messageEventArgs.Message.Chat.FirstName + " said: " + messageEventArgs.Message.Text));
+            var wrappedOutput = new Output(
+                _output.PresenterFactory, 
+                new IOutputStream[] {
+                    _output,
+                    new BotCallbackOutputStream(_client, messageEventArgs.Message.Chat.Id)});
+            await _commandsExecutor.Execute(messageEventArgs.Message.Text, wrappedOutput);
         }
 
         public void Dispose()

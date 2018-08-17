@@ -2,6 +2,6 @@
 {
     public interface IOutputStream
     {
-        void Write(string message);
+        void Show(IOutputView textView);
     }
 }

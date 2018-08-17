@@ -5,7 +5,7 @@ namespace Tobii.Build.Robot.Core
 {
     public class ExitCommand : CommandBase
     {
-        public ExitCommand(CancellationTokenSource cancellationTokenSource) : base(cancellationTokenSource)
+        public ExitCommand(IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource) : base(cancellationTokenSource)
         {
         }
 

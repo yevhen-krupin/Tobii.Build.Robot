@@ -18,14 +18,17 @@ namespace Tobii.Build.Robot.Core
             _cancellationTokenSource = cancellationTokenSource;
         }
 
-        public async void Run()
+        public void Run()
         {
             while (true)
             {
                 try
                 {
                     var message = _inputStream.GetMessage();
-                    await _context.Execute(message, _output);
+                    _context.Execute(message, _output)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
                     _cancellationTokenSource.Token.ThrowIfCancellationRequested();
                 }
                 catch (OperationCanceledException)
@@ -39,9 +42,9 @@ namespace Tobii.Build.Robot.Core
                 }
                 catch(Exception ex)
                 {
-                    _output.Write("error: " + ex.Message);                    
+                    _output.Write("error: " + ex.Message); 
                 }
-            }                    
+            }
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using RestEase;
 using Tobii.Build.Robot.Model;
 
 namespace Tobii.Build.Robot.Rest
@@ -18,9 +17,7 @@ namespace Tobii.Build.Robot.Rest
         public TeamCity(string url, string userName, string password)
         {
             BaseUrl = url;
-            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
-            _api = RestClient.For<ITeamCityRest>(BaseUrl);
-            _api.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+            _api = new TeamCityApi(BaseUrl, userName, password);
         }
 
         public async Task<Projects> GetProjectsAsync()
@@ -35,19 +32,24 @@ namespace Tobii.Build.Robot.Rest
             return branches;
         }
 
-        public Task<Model.Build> GetBuildFullInfo([Path] string buildId)
+        public Task<Model.Build> GetBuildFullInfo(string buildId)
         {
             return _api.GetBuild(buildId);
         }
 
-        public Task<BuildTypes> GetBuildTypes([Path] string projectId)
+        public Task<BuildTypes> GetBuildTypes(string projectId)
         {
             return _api.GetBuildTypes(projectId);
         }
 
-        public Task<Builds> GetBuilds([Path] string projectId)
+        public Task<Builds> GetBuilds(string projectId)
         {
             return _api.GetBuilds(projectId);
+        }
+
+        public Task<Project> GetProjectAsync(string projectId)
+        {
+            return _api.GetProjectAsync(projectId);
         }
     }
 }

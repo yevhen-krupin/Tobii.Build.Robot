@@ -4,20 +4,35 @@ using Tobii.Build.Robot.Core;
 
 namespace Tobii.Build.Robot.Telegram
 {
-    public class BotCallbackOutputStream : IOutputStream
+    public class BotCallbackOutputStream : IUIStream, IOutputStream
     {
         private readonly TelegramBotClient _client;
-        private readonly Message _message;
+        private readonly long chatId;
 
-        public BotCallbackOutputStream(TelegramBotClient client, Message message)
+        public BotCallbackOutputStream(TelegramBotClient client, long chatId)
         {
             _client = client;
-            _message = message;
+            this.chatId = chatId;
         }
 
-        public void Write(string message)
+        public void Show(IOutputView view)
         {
-            _client.SendTextMessageAsync(_message.Chat.Id, message);
+            view.Present(this);
+        }
+
+        public void ShowButton(Clickable button)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowMessage(string message)
+        {
+            _client.SendTextMessageAsync(chatId, message);
+        }
+
+        public void ShowOptions(string title, Clickable[] button)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
