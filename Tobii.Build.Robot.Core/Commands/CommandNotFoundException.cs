@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tobii.Build.Robot.Core
+namespace Tobii.Build.Robot.Core.Commands
 {
     public class CommandNotFoundException : Exception
     {

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Threading;
+using Tobii.Build.Robot.Core.Commands;
 
 namespace Tobii.Build.Robot.Core
 {
     public class RunLooper
     {
-        private readonly InputStream _inputStream;
+        private readonly InputPipeline _inputPipeline;
         private readonly CommandsExecutor _context;
         private readonly Output _output;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public RunLooper(InputStream inputStream, CommandsExecutor context, Output output, CancellationTokenSource cancellationTokenSource)
+        public RunLooper(InputPipeline inputPipeline, CommandsExecutor context, Output output, CancellationTokenSource cancellationTokenSource)
         {
-            _inputStream = inputStream;
+            _inputPipeline = inputPipeline;
             _context = context;
             _output = output;
             _cancellationTokenSource = cancellationTokenSource;
@@ -24,7 +25,7 @@ namespace Tobii.Build.Robot.Core
             {
                 try
                 {
-                    if(_inputStream.TryGetMessage(out Message message))
+                    if(_inputPipeline.TryGetMessage(out Message message))
                     {
                         _context.Execute(message.Content, message.CustomizedOutput ?? _output)
                            .ConfigureAwait(false)

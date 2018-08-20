@@ -14,7 +14,9 @@ namespace Tobii.Build.Robot.Rest
         Task<BuildTypes> GetBuildTypes(string projectId);
         
         Task<Builds> GetBuilds(string projectId);
-        
+
+        Task<Builds> GetQueue();
+
         Task<Model.Build> GetBuild(string buildId);
         
         Task<Project> GetProjectAsync(string projectId);

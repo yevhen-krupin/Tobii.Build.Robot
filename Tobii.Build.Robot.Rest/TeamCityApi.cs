@@ -12,11 +12,11 @@ namespace Tobii.Build.Robot.Rest
     {
         public TeamCityApi(string baseUrl, string userName, string password)
         {
-            credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
+            _credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
             BaseUrl = new Uri(baseUrl);
         }
 
-        private readonly string credentials;
+        private readonly string _credentials;
 
         public Uri BaseUrl { get; }
         
@@ -24,6 +24,12 @@ namespace Tobii.Build.Robot.Rest
         {
             var request = $"/httpAuth/app/rest/projects/{projectId}/branches";
             return await RequestFor<Branches>(request);
+        }
+
+        public async Task<Builds> GetQueue()
+        {
+            var request = $"/httpAuth/app/rest/buildQueue";
+            return await RequestFor<Builds>(request);
         }
 
         public async Task<Model.Build> GetBuild(string buildId)
@@ -62,7 +68,7 @@ namespace Tobii.Build.Robot.Rest
             {
                 client.BaseAddress = BaseUrl;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _credentials);
                 using (var result = await client.GetAsync(url).ConfigureAwait(false))
                 {
                     var response = await result.Content.ReadAsStringAsync();

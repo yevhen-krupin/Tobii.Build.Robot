@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -7,6 +8,7 @@ using Tobii.Build.Robot.Rest;
 using Tobii.Build.Robot.Rest.Command;
 using Tobii.Build.Robot.Rest.Core;
 using Tobii.Build.Robot.Telegram;
+using Tobii.Build.Robot.Core.Commands;
 using ConfigurationProvider = Tobii.Build.Robot.Telegram.ConfigurationProvider;
 
 namespace Tobii.Build.Robot
@@ -34,17 +36,22 @@ namespace Tobii.Build.Robot
             output.Write("type exit to leave bot");
            
             var client = new TelegramBotClient(new ConfigurationProvider().ApiKey);
-            var commandsExecutor = new CommandsExecutor(new CommandBase[]
+            var commands = new List<CommandBase>
             {
-                new ExitCommand(presenterFactory, cancellationSource),
+                new StartCommand(cancellationSource),
+                new ExitCommand(cancellationSource),
+                new TeamcityGetBuildQueueCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetProjectsCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetProjectCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBranchesCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildsCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildTypesCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildCommand(gateway.For<ITeamCity>(), cancellationSource)
-            });
-            var inputStream = new InputStream();
+            };
+            var help = new HelpCommand(commands, cancellationSource);
+            commands.Add(help);
+            var commandsExecutor = new CommandsExecutor(commands);
+            var inputStream = new InputPipeline();
             var runLooper = new RunLooper(inputStream, commandsExecutor, output, cancellationSource);
             using (var botWrapper = new BotWrapper(client, inputStream, presenterFactory, cancellationSource, commandsExecutor, output))
             {

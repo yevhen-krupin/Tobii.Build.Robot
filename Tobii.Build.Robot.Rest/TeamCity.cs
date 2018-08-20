@@ -10,7 +10,7 @@ namespace Tobii.Build.Robot.Rest
     public class TeamCity : ITeamCity
     {
         private const string RootProject = "_Root";
-        private ITeamCityRest _api;
+        private readonly ITeamCityRest _api;
 
         public string BaseUrl { get; }
 
@@ -45,6 +45,11 @@ namespace Tobii.Build.Robot.Rest
         public Task<Builds> GetBuilds(string projectId)
         {
             return _api.GetBuilds(projectId);
+        }
+
+        public Task<Builds> GetQueue()
+        {
+            return _api.GetQueue();
         }
 
         public Task<Project> GetProjectAsync(string projectId)

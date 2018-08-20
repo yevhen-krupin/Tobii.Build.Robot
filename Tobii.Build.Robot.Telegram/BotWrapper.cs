@@ -5,25 +5,22 @@ using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 using Tobii.Build.Robot.Core;
+using Tobii.Build.Robot.Core.Commands;
 
 namespace Tobii.Build.Robot.Telegram
 {
-    public class BotWrapper : IBotWrapper
+    public class BotWrapper : IDisposable
     {
         private readonly TelegramBotClient _client;
-        private readonly InputStream inputStream;
-        private readonly IPresenterFactory presenterFactory;
+        private readonly InputPipeline _inputPipeline;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CommandsExecutor _commandsExecutor;
         private readonly Output _output;
 
-        public BotWrapper(TelegramBotClient client, InputStream inputStream, IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
+        public BotWrapper(TelegramBotClient client, InputPipeline inputPipeline, IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
         {
             _client = client;
-            this.inputStream = inputStream;
-            this.presenterFactory = presenterFactory;
+            this._inputPipeline = inputPipeline;
             _cancellationTokenSource = cancellationTokenSource;
-            _commandsExecutor = commandsExecutor;
             _output = output;
 
             _client.OnMessage += BotOnOnMessage;
@@ -38,9 +35,9 @@ namespace Tobii.Build.Robot.Telegram
             });
         }
 
-        private async void _client_OnCallbackQuery(object sender, CallbackQueryEventArgs e)
+        private void _client_OnCallbackQuery(object sender, CallbackQueryEventArgs e)
         {
-            inputStream.Enqueue(new Message()
+            _inputPipeline.Enqueue(new Message()
             {
                 Content = e.CallbackQuery.Data,
                 Source = e.CallbackQuery.Message.Chat.Id.ToString(),
@@ -51,7 +48,7 @@ namespace Tobii.Build.Robot.Telegram
         private void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
         {
             // todo: looks like here we should decide about when to create wrapped output and when cache chat id.
-            inputStream.Enqueue(new Message()
+            _inputPipeline.Enqueue(new Message()
             {
                 Content = messageEventArgs.Message.Text,
                 Source = messageEventArgs.Message.Chat.Id.ToString(),

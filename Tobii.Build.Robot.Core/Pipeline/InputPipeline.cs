@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Tobii.Build.Robot.Core
 {
-    public class InputStream
+    public class InputPipeline
     {
-        private ManualResetEventSlim autoResetEvent = new ManualResetEventSlim(false);
         BlockingCollection<Message> blockingCollection = new BlockingCollection<Message>();
 
         public bool TryGetMessage(out Message item)
