@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tobii.Build.Robot.Rest.Command\Tobii.Build.Robot.Rest.Command.csproj" />
+    <ProjectReference Include="..\Tobii.Build.Robot.Rest.Command\Tobii.Build.Robot.Rest.Command.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Config\Tobii.Build.Robot.Config.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Core\Tobii.Build.Robot.Core.csproj" />
     <ProjectReference Include="..\Tobii.Build.Robot.Model\Tobii.Build.Robot.Model.csproj" />

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Config", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tobii.Build.Robot.Rest.Core", "Tobii.Build.Robot.Rest.Core\Tobii.Build.Robot.Rest.Core.csproj", "{0E4AC25D-2E5B-4D75-A3DA-143A0D176187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii.Build.Robot.Rest.Command", "..\Tobii.Build.Robot.Rest.Command\Tobii.Build.Robot.Rest.Command.csproj", "{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii.Build.Robot.Rest.Command", "Tobii.Build.Robot.Rest.Command\Tobii.Build.Robot.Rest.Command.csproj", "{93E6CCE0-49A9-4627-B96E-6EF819B0EBDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

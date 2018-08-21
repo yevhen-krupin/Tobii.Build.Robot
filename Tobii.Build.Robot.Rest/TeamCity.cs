@@ -10,14 +10,11 @@ namespace Tobii.Build.Robot.Rest
     public class TeamCity : ITeamCity
     {
         private const string RootProject = "_Root";
-        private readonly ITeamCityRest _api;
-
-        public string BaseUrl { get; }
-
-        public TeamCity(string url, string userName, string password)
+        private readonly ICiCdServerApi _api;
+        
+        public TeamCity(IRestClient restClient)
         {
-            BaseUrl = url;
-            _api = new TeamCityApi(BaseUrl, userName, password);
+            _api = new TeamCityApi(restClient);
         }
 
         public async Task<Projects> GetProjectsAsync()

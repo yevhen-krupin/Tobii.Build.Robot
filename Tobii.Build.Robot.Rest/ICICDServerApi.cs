@@ -5,8 +5,10 @@ using Tobii.Build.Robot.Model;
 
 namespace Tobii.Build.Robot.Rest
 {
-    public interface ITeamCityRest
+    public interface ICiCdServerApi
     {
+        IRestClient RestClient { get; }
+
         Task<Projects> GetProjectsAsync();
         
         Task<Branches> GetBranchesAsync(string projectId);

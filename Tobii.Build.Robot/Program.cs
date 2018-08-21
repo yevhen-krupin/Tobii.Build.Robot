@@ -23,7 +23,12 @@ namespace Tobii.Build.Robot
                 Console.WriteLine((e.ExceptionObject as Exception).Message);
             };
             var teamcityConfig = new Rest.ConfigurationProvider();
-            var tc = new TeamCity(teamcityConfig.Host, teamcityConfig.Login, teamcityConfig.Password);
+            var restClient = new RestClient(
+                teamcityConfig.Host, 
+                teamcityConfig.Login, 
+                teamcityConfig.Password,
+                MediaType.Json);
+            var tc = new TeamCity(restClient);
             var gateway = new Gateway(new[] { tc });
             var presenterFactory = new PresenterFactory();
             var output = new Output(

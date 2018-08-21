@@ -2,6 +2,5 @@
 {
     public interface IGateway
     {
-        string BaseUrl { get; }
     }
 }
