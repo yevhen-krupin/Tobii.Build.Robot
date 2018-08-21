@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
-using System.Linq;
 using Tobii.Build.Robot.Core.Commands;
-namespace Tobii.Build.Robot.Rest.Command
+
+namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
     public class TeamcityGetProjectCommand : CommandBase
     {

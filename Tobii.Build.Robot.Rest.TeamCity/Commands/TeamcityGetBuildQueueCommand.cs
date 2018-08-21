@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 
-namespace Tobii.Build.Robot.Rest.Command
+namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
     public class TeamcityGetBuildQueueCommand : AbstractTeamcityBuildsCommand
     {

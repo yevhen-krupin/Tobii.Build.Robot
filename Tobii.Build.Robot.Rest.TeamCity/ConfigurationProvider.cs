@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Tobii.Build.Robot.Config;
 
-namespace Tobii.Build.Robot.Rest
+namespace Tobii.Build.Robot.Rest.TeamCity
 {
     public class ConfigurationProvider : ConfigurationProviderBase
     {

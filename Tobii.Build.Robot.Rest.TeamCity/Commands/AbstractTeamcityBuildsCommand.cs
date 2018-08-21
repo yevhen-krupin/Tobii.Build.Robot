@@ -4,7 +4,7 @@ using System.Threading;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
 
-namespace Tobii.Build.Robot.Rest.Command
+namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
     public abstract class AbstractTeamcityBuildsCommand : CommandBase
     {

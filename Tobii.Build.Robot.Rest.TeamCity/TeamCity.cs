@@ -1,11 +1,7 @@
-﻿using System;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿using System.Threading.Tasks;
 using Tobii.Build.Robot.Model;
 
-namespace Tobii.Build.Robot.Rest
+namespace Tobii.Build.Robot.Rest.TeamCity
 {
     public class TeamCity : ITeamCity
     {

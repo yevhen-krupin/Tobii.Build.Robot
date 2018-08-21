@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Rest;
-using Tobii.Build.Robot.Rest.Command;
 using Tobii.Build.Robot.Rest.Core;
 using Tobii.Build.Robot.Telegram;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Rest.TeamCity;
+using Tobii.Build.Robot.Rest.TeamCity.Commands;
 using ConfigurationProvider = Tobii.Build.Robot.Telegram.ConfigurationProvider;
 
 namespace Tobii.Build.Robot
@@ -22,7 +23,7 @@ namespace Tobii.Build.Robot
             {
                 Console.WriteLine((e.ExceptionObject as Exception).Message);
             };
-            var teamcityConfig = new Rest.ConfigurationProvider();
+            var teamcityConfig = new Rest.TeamCity.ConfigurationProvider();
             var restClient = new RestClient(
                 teamcityConfig.Host, 
                 teamcityConfig.Login, 

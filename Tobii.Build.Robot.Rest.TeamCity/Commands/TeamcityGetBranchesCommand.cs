@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
-namespace Tobii.Build.Robot.Rest.Command
+
+namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
     public class TeamcityGetBranchesCommand : CommandBase
     {
