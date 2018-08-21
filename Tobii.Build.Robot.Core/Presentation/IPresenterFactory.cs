@@ -1,4 +1,6 @@
-﻿namespace Tobii.Build.Robot.Core
+﻿using Tobii.Build.Robot.Core.Route;
+
+namespace Tobii.Build.Robot.Core
 {
     public interface IPresenterFactory
     {

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Route;
 
 namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {

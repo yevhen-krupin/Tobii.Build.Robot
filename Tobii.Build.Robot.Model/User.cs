@@ -1,11 +1,7 @@
 ﻿namespace Tobii.Build.Robot.Model
 {
-    public class User
+    public class User : Entity
     {
         public string Username { get; set; }
-
-        public string Name { get; set; }
-
-        public string Id { get; set; }
     }
 }

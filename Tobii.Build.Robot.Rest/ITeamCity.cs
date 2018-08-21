@@ -4,14 +4,8 @@ using Tobii.Build.Robot.Rest.Core;
 
 namespace Tobii.Build.Robot.Rest
 {
-    public interface ITeamCity : IGateway
+    public interface ITeamCity : ICiCdServerApi
     {
-        Task<Project> GetProjectAsync(string projectId);
-        Task<Projects> GetProjectsAsync();
-        Task<Branches> GetBranchesAsync(string projectId);
-        Task<Model.Build> GetBuildFullInfo(string buildId);
-        Task<BuildTypes> GetBuildTypes(string projectId);
-        Task<Builds> GetBuilds(string projectId);
-        Task<Builds> GetQueue();
+        
     }
 }

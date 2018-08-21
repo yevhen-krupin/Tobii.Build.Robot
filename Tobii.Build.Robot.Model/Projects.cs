@@ -8,9 +8,4 @@ namespace Tobii.Build.Robot.Model
         public int Count { get; set; }
         public List<Project> Project { get; set; }
     }
-
-    public class RestBase
-    {
-        public string Href { get; set; }
-    }
 }

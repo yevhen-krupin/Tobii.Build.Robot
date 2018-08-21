@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Tobii.Build.Robot.Core.Route;
 
 namespace Tobii.Build.Robot.Core
 {

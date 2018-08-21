@@ -2,9 +2,10 @@
 
 namespace Tobii.Build.Robot.Model
 {
-    public class Changes : RestBase
+    public class Agents
     {
         public int Count { get; set; }
-        public List<Change> Change { get; set; }
+
+        public List<Agent> Agent { get; set; }
     }
 }

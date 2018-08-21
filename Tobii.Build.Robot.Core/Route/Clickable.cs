@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tobii.Build.Robot.Core
+﻿namespace Tobii.Build.Robot.Core.Route
 {
     public class Clickable
     {

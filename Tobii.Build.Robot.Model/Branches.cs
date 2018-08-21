@@ -5,7 +5,7 @@ namespace Tobii.Build.Robot.Model
 {
     public class Branches : RestBase
     {
-        public List<Branch> branch { get; set; }
+        public List<Branch> Branch { get; set; }
         public string Count { get; set; }
     }
 }

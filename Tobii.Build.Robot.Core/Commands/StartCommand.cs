@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Tobii.Build.Robot.Core.Route;
 
 namespace Tobii.Build.Robot.Core.Commands
 {
@@ -16,7 +17,9 @@ namespace Tobii.Build.Robot.Core.Commands
             var clickables = new Clickable[]
             {
                 new Clickable("Projects", "", "", "projects", ""),
+                new Clickable("Running builds", "", "", "running", ""),
                 new Clickable("Queue", "", "", "queue", ""),
+                new Clickable("Agents", "", "", "agents", ""),
                 new Clickable("Help", "", "", "help", "")
             };
 

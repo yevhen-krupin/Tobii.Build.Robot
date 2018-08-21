@@ -21,7 +21,7 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
             Assert.Count(parameters, 1);
             output.Write("get build command executing");
 
-            var build = await _teamCity.GetBuildFullInfo(parameters[0]);
+            var build = await _teamCity.GetBuild(parameters[0]);
             output.Write("full build info received:");
             output.Write(ObjectDumper.Dump(build));
         }

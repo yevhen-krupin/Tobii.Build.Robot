@@ -38,5 +38,10 @@ namespace Tobii.Build.Robot.Model
         public Changes Changes { get; set; }
 
         public Revisions Revisions { get; set; }
+
+        public Agent Agent { get; set; }
+
+        [JsonProperty("running-info")]
+        public RunningInfo RunningInfo { get; set; }
     }
 }

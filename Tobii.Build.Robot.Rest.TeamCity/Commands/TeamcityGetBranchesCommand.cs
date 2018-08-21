@@ -1,11 +1,13 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Route;
 
 namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
-    public class TeamcityGetBranchesCommand : CommandBase
+    public class TeamcityGetBranchesCommand : AbstractTeamcityBuildsCommand
     {
         private readonly ITeamCity _teamCity;
 
@@ -22,10 +24,9 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
             output.Write("branches command executing");
             
             var branches = await _teamCity.GetBranchesAsync(parameters[0]);
-            foreach (var branch in branches.branch)
-            {
-                output.Write(string.Format("Branch {0}, default: {1}", branch.Name, branch.Default));
-            }
+            output.Ask("Branches available: ",
+                branches.Branch.Select(branch => new Clickable(branch.Name, "", "", "branch", branch.Name + " " + parameters[0])).ToArray());
+          
         }
     }
 }

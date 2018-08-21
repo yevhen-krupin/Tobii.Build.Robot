@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 
@@ -18,17 +19,18 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
         public override async Task Do(Output output, string[] parameters)
         {
             Assert.Count(parameters, 1);
+
             output.Write("builds command executing");
 
-            var builds = await _teamCity.GetBuilds(parameters[0]);
-            foreach (var build in builds.Build)
+            var builds = await _teamCity.GetBuildsFromProject(parameters[0]);
+            if (!builds.Build.Any())
             {
-                var info = await _teamCity.GetBuildFullInfo(build.Id);
-
-                Ask(output, info);
+                output.Write("Builds not found for project " + parameters[0]);
+            }
+            else
+            {
+                await RunViaBuilds(_teamCity, output, builds).ConfigureAwait(false);
             }
         }
-
-       
     }
 }

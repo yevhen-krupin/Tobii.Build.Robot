@@ -29,7 +29,7 @@ namespace Tobii.Build.Robot
                 teamcityConfig.Login, 
                 teamcityConfig.Password,
                 MediaType.Json);
-            var tc = new TeamCity(restClient);
+            var tc = new TeamCityApi(restClient);
             var gateway = new Gateway(new[] { tc });
             var presenterFactory = new PresenterFactory();
             var output = new Output(
@@ -52,7 +52,12 @@ namespace Tobii.Build.Robot
                 new TeamcityGetBranchesCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildsCommand(gateway.For<ITeamCity>(), cancellationSource),
                 new TeamcityGetBuildTypesCommand(gateway.For<ITeamCity>(), cancellationSource),
-                new TeamcityGetBuildCommand(gateway.For<ITeamCity>(), cancellationSource)
+                new TeamcityGetBuildCommand(gateway.For<ITeamCity>(), cancellationSource),
+                new TeamcityGetAgentsCommand(gateway.For<ITeamCity>(), cancellationSource),
+                new TeamcityEnqueueBuild(gateway.For<ITeamCity>(), cancellationSource),
+                new TeamcityGetRunningBuildsCommand(gateway.For<ITeamCity>(), cancellationSource),
+                new TeamcityEnqueueAgentCommand(gateway.For<ITeamCity>(), cancellationSource),
+                new TeamcityGetBranchCommand(gateway.For<ITeamCity>(), cancellationSource)
             };
             var help = new HelpCommand(commands, cancellationSource);
             commands.Add(help);

@@ -9,9 +9,9 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
     {
         private readonly ITeamCity _teamCity;
 
-        public TeamcityGetBuildTypesCommand(ITeamCity teamCity, CancellationTokenSource cancellationTokenSource) : base(cancellationTokenSource)
+        public TeamcityGetBuildTypesCommand(ITeamCity server, CancellationTokenSource cancellationTokenSource) : base(cancellationTokenSource)
         {
-            _teamCity = teamCity;
+            _teamCity = server;
         }
 
         public override string Name { get { return "buildtypes"; } }
@@ -24,7 +24,8 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
             var buildTypes = await _teamCity.GetBuildTypes(parameters[0]);
             foreach (var item in buildTypes.BuildType)
             {
-                output.Write(string.Format("buildtype: {0} {1}", item.Id, item.Name));
+                var info = await _teamCity.GetBuildType(item.Id);
+                output.Write(string.Format("buildtype: {0} {1}", info.Id, info.Name));
             }
         }
     }

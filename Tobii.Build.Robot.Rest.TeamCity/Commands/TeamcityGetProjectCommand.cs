@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Route;
 
 namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
@@ -25,6 +26,7 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
             {
                 new Clickable("Build types", Project, project.Id, "buildtypes", project.Id),
                 new Clickable("Builds", Project, project.Id, "builds", project.Id),
+                new Clickable("Branches", Project, project.Id, "branches", project.Id),
                 new Clickable("Back", "", "", "projects", "")
             };
 

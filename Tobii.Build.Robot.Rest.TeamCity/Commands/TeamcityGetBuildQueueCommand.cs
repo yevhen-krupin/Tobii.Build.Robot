@@ -23,10 +23,10 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
             {
                 output.Write("The build queue is empty");
             }
-            foreach (var build in builds.Build)
+            else
             {
-                var info = await _teamCity.GetBuildFullInfo(build.Id);
-                Ask(output, info);
+                await RunViaBuilds(_teamCity, output, builds).ConfigureAwait(false);
+
             }
         }
     }
