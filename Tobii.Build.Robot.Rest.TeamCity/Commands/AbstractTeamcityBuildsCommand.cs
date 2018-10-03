@@ -13,7 +13,7 @@ namespace Tobii.Build.Robot.Rest.TeamCity.Commands
 {
     public abstract class AbstractTeamcityBuildsCommand : CommandBase
     {
-        protected async Task RunViaBuilds(ITeamCity teamCity, Output output, Model.Builds builds)
+        protected async Task RunViaBuilds(ITeamCity teamCity, Output output, Builds builds)
         {
             var runningBuilds = await teamCity.GetRunningBuilds();
             var runnintAgentsIds = runningBuilds.Build.Select(x => x.Agent.Id).ToHashSet();

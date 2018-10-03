@@ -6,6 +6,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 using Tobii.Build.Robot.Core;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Pipeline;
 
 namespace Tobii.Build.Robot.Telegram
 {
@@ -15,13 +16,15 @@ namespace Tobii.Build.Robot.Telegram
         private readonly InputPipeline _inputPipeline;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Output _output;
+        private readonly IStore _store;
 
-        public BotWrapper(TelegramBotClient client, InputPipeline inputPipeline, IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output)
+        public BotWrapper(TelegramBotClient client, InputPipeline inputPipeline, IPresenterFactory presenterFactory, CancellationTokenSource cancellationTokenSource, CommandsExecutor commandsExecutor, Output output, IStore store)
         {
             _client = client;
             this._inputPipeline = inputPipeline;
             _cancellationTokenSource = cancellationTokenSource;
             _output = output;
+            _store = store;
 
             _client.OnMessage += BotOnOnMessage;
             _client.OnCallbackQuery += _client_OnCallbackQuery;
@@ -41,28 +44,30 @@ namespace Tobii.Build.Robot.Telegram
             {
                 Content = e.CallbackQuery.Data,
                 Source = e.CallbackQuery.Message.Chat.Id.ToString(),
-                CustomizedOutput = WrapOutputFor(e.CallbackQuery.Message.Chat.Id)
+                CustomizedOutput = RespondTo(e.CallbackQuery.Message.Chat.Id)
             });
         }
 
         private void BotOnOnMessage(object sender, MessageEventArgs messageEventArgs)
         {
+            var id = messageEventArgs.Message.Text;
+            var data = _store.Get<string>(messageEventArgs.Message.Chat.Id.ToString(), id) ?? id;
             // todo: looks like here we should decide about when to create wrapped output and when cache chat id.
             _inputPipeline.Enqueue(new Message()
             {
-                Content = messageEventArgs.Message.Text,
+                Content = data,
                 Source = messageEventArgs.Message.Chat.Id.ToString(),
-                CustomizedOutput = WrapOutputFor(messageEventArgs.Message.Chat.Id)
+                CustomizedOutput = RespondTo(messageEventArgs.Message.Chat.Id)
             });
         }
 
-        private Output WrapOutputFor(long chatId)
+        private Output RespondTo(long chatId)
         {
             return new Output(
                 _output.PresenterFactory,
                 new IOutputStream[] {
                     _output,
-                    new BotCallbackOutputStream(_client, chatId)});
+                    new BotCallbackOutputStream(_store, _client, chatId)});
         }
 
         public void Dispose()

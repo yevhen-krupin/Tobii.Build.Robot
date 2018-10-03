@@ -8,9 +8,11 @@ using Tobii.Build.Robot.Rest;
 using Tobii.Build.Robot.Rest.Core;
 using Tobii.Build.Robot.Telegram;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Pipeline;
 using Tobii.Build.Robot.Rest.TeamCity;
 using Tobii.Build.Robot.Rest.TeamCity.Commands;
 using ConfigurationProvider = Tobii.Build.Robot.Telegram.ConfigurationProvider;
+using System.IO;
 
 namespace Tobii.Build.Robot
 {
@@ -63,8 +65,10 @@ namespace Tobii.Build.Robot
             commands.Add(help);
             var commandsExecutor = new CommandsExecutor(commands);
             var inputStream = new InputPipeline();
-            var runLooper = new RunLooper(inputStream, commandsExecutor, output, cancellationSource);
-            using (var botWrapper = new BotWrapper(client, inputStream, presenterFactory, cancellationSource, commandsExecutor, output))
+            var consoleListener = new ConsoleCommandProducer(inputStream);
+            var runLooper = new RunLooper(inputStream, commandsExecutor, consoleListener, output, cancellationSource);
+            var store = new MemoryStore();
+            using (var botWrapper = new BotWrapper(client, inputStream, presenterFactory, cancellationSource, commandsExecutor, output, store))
             {
                 botWrapper.Start();
                 runLooper.Run();
@@ -74,6 +78,63 @@ namespace Tobii.Build.Robot
         private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             Console.WriteLine(e.Exception.Message);
+        }
+    }
+
+    internal class MemoryStore : IStore
+    {
+        private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
+
+        public void Put<T>(string user, string id, T item)
+        {
+            _data.Add(id, item);
+        }
+
+        public T Get<T>(string chatId, string id)
+        {
+            if (_data.ContainsKey(id))
+            {
+                var item = (T) _data[id];
+                _data.Remove(id);
+                return item;
+            }
+
+            return default(T);
+        }
+
+        public void Remove(string chatId, string id)
+        {
+            if (_data.ContainsKey(id))
+            {
+                _data.Remove(id);
+            }
+        }
+    }
+
+    public class BackupStore : IStore
+    {
+        private readonly IStore decoratedStore;
+
+
+        public BackupStore(IStore decoratedStore)
+        {
+            this.decoratedStore = decoratedStore;
+        }
+
+        public T Get<T>(string chatId, string id)
+        {
+            return decoratedStore.Get<T>(chatId, id);
+        }
+
+        public void Put<T>(string user, string id, T item)
+        {
+            decoratedStore.Put<T>(user, id, item);
+            
+        }
+
+        public void Remove(string chatId, string id)
+        {
+            decoratedStore.Remove(chatId, id);
         }
     }
 }

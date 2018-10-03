@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Tobii.Build.Robot.Core.Commands;
+using Tobii.Build.Robot.Core.Pipeline;
 
 namespace Tobii.Build.Robot.Core
 {
@@ -8,19 +9,22 @@ namespace Tobii.Build.Robot.Core
     {
         private readonly InputPipeline _inputPipeline;
         private readonly CommandsExecutor _context;
+        private readonly ConsoleCommandProducer _consoleCommandProducer;
         private readonly Output _output;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public RunLooper(InputPipeline inputPipeline, CommandsExecutor context, Output output, CancellationTokenSource cancellationTokenSource)
+        public RunLooper(InputPipeline inputPipeline, CommandsExecutor context, ConsoleCommandProducer consoleCommandProducer, Output output, CancellationTokenSource cancellationTokenSource)
         {
             _inputPipeline = inputPipeline;
             _context = context;
+            _consoleCommandProducer = consoleCommandProducer;
             _output = output;
             _cancellationTokenSource = cancellationTokenSource;
         }
 
         public void Run()
         {
+            _consoleCommandProducer.ListenCommands(_cancellationTokenSource.Token);
             while (true)
             {
                 try
